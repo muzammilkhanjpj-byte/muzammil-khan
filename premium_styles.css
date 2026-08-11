@@ -58,6 +58,8 @@
 
 html {
   background-color: var(--color-obsidian);
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -66,6 +68,7 @@ body {
   font-family: 'Inter', sans-serif;
   line-height: 1.6;
   overflow-x: hidden;
+  width: 100%;
 }
 
 /* Custom scrollbar */
