@@ -117,6 +117,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Close triggers
   lightboxClose.addEventListener('click', closeLightbox);
+  const lightboxCloseAction = document.getElementById('lightbox-close-action-btn');
+  if (lightboxCloseAction) {
+    lightboxCloseAction.addEventListener('click', closeLightbox);
+  }
 
   // Close when clicking outside content (on the blurred overlay)
   lightbox.addEventListener('click', (e) => {

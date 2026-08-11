@@ -375,6 +375,34 @@ body {
   transform: translateY(-2px);
 }
 
+.btn-secondary {
+  position: relative;
+  padding: 12px 30px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-white);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: var(--transition-medium);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: var(--color-white);
+  transform: translateY(-2px);
+}
+
 /* ==========================================================================
    GALLERY FILTER SYSTEM
    ========================================================================== */
@@ -956,7 +984,8 @@ body {
     gap: 0.8rem;
   }
 
-  .lightbox-actions .btn-premium {
+  .lightbox-actions .btn-premium,
+  .lightbox-actions .btn-secondary {
     width: 100%;
     text-align: center;
     justify-content: center;
