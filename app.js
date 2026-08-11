@@ -109,6 +109,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const closeLightbox = () => {
     lightbox.classList.remove('active');
     document.body.style.overflow = 'auto';
+    
+    // Smooth scroll back to the gallery/portfolio section
+    const gallerySection = document.getElementById('gallery');
+    if (gallerySection) {
+      gallerySection.scrollIntoView({ behavior: 'smooth' });
+    }
+    
     // Clear image src after fadeout to prevent flash of old image next time
     setTimeout(() => {
       lightboxImg.src = '';
