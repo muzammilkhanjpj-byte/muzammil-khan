@@ -118,6 +118,18 @@ body {
    LAYOUT COMPONENTS
    ========================================================================== */
 
+/* Ambient Background Container to clip any layout overflow */
+.ambient-bg-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
 /* Glow Spheres for Background Ambient Glow */
 .glow-sphere {
   position: absolute;

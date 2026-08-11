@@ -11,10 +11,12 @@
 </head>
 <body class="font-body">
 
-  <!-- Ambient Glow Spheres for Background Depth -->
-  <div class="glow-sphere glow-sphere-gold animate-float" style="width: 600px; height: 600px; top: -150px; left: -100px; opacity: 0.8;"></div>
-  <div class="glow-sphere glow-sphere-teal" style="width: 700px; height: 700px; top: 35vh; right: -200px; opacity: 0.5;"></div>
-  <div class="glow-sphere glow-sphere-gold" style="width: 500px; height: 500px; bottom: -100px; left: 10%; opacity: 0.6;"></div>
+  <!-- Ambient Glow Spheres for Background Depth (wrapped to prevent horizontal overflow) -->
+  <div class="ambient-bg-wrapper">
+    <div class="glow-sphere glow-sphere-gold animate-float" style="width: 600px; height: 600px; top: -150px; left: -100px; opacity: 0.8;"></div>
+    <div class="glow-sphere glow-sphere-teal" style="width: 700px; height: 700px; top: 35vh; right: -200px; opacity: 0.5;"></div>
+    <div class="glow-sphere glow-sphere-gold" style="width: 500px; height: 500px; bottom: -100px; left: 10%; opacity: 0.6;"></div>
+  </div>
 
   <!-- Sticky Glass Navigation Header -->
   <nav class="glass-nav">
