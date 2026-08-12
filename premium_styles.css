@@ -326,7 +326,18 @@ body {
   color: var(--color-gold-light);
   font-style: italic;
   max-width: 600px;
-  margin-bottom: 2rem;
+  margin-bottom: 0.6rem;
+}
+
+.hero-tagline {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.72);
+  letter-spacing: 0.04em;
+  max-width: 540px;
+  margin: 0 auto 2rem auto;
+  line-height: 1.7;
 }
 
 /* Premium Buttons */
