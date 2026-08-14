@@ -7,4 +7,4 @@ Allow: /app.js
 Allow: /scroll_controller.js
 Allow: /background_grid.js
 
-Sitemap: https://muzammilkhan.com/sitemap.xml
+Sitemap: https://muzammil-khan-five.vercel.app/sitemap.xml
