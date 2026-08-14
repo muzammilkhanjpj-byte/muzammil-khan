@@ -1,16 +1,20 @@
 // KineticGrid background animation translated from React component code
 document.addEventListener("DOMContentLoaded", () => {
+  // Query bounds before prepending canvas to prevent forced reflow layout thrashing on DOM load
+  const initW = window.innerWidth;
+  const initH = window.innerHeight;
+
   const canvas = document.createElement("canvas");
   canvas.className = "kinetic-canvas";
   canvas.id = "kinetic-canvas";
+  canvas.width = initW;
+  canvas.height = initH;
   document.body.prepend(canvas);
 
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
 
   // ─── Constants ────────────────────────────────────────────────────────────────
-  const CELL_SIZE = 55; // Desktop size
-  const INFLUENCE_RADIUS = 260;
   const MAX_WARP = 24;
   const DOT_SPACING = 28;
   const LERP_SPEED = 0.08;
@@ -23,8 +27,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const mouse = { x: -9999, y: -9999 };
   const targetMouse = { x: -9999, y: -9999 };
   const ripples = [];
-  const size = { w: 0, h: 0 };
+  const size = { w: initW, h: initH };
   let rafId = 0;
+  let isAnimating = false;
+  let cellSize = initW < 768 ? 50 : 80;
+  let influenceRadius = initW < 768 ? 180 : 260;
 
   // Gold theme parameters matching Muzammil's brand system
   const theme = {
@@ -60,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const dy = gy - mouse.y;
     const dist = Math.sqrt(dx * dx + dy * dy);
 
-    const proximity = Math.max(0, 1 - dist / INFLUENCE_RADIUS) * pinFactor;
+    const proximity = Math.max(0, 1 - dist / influenceRadius) * pinFactor;
 
     // Ripple displacement
     let rx = 0, ry = 0;
@@ -81,8 +88,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Cursor warp with bell falloff
-    if (dist < INFLUENCE_RADIUS && dist > 0 && pinFactor > 0) {
-      const t = dist / INFLUENCE_RADIUS;
+    if (dist < influenceRadius && dist > 0 && pinFactor > 0) {
+      const t = dist / influenceRadius;
       const eased = t < 0.01 ? 0 : (1 - t) * (1 - t) * Math.min(1, dist / 60);
       const warpAmt = eased * MAX_WARP * pinFactor;
       const angle = Math.atan2(dy, dx);
@@ -106,15 +113,20 @@ document.addEventListener("DOMContentLoaded", () => {
     canvas.height = h;
     size.w = w;
     size.h = h;
+    cellSize = w < 768 ? 50 : 80;
+    influenceRadius = w < 768 ? 180 : 260;
   };
 
-  setSize();
-  window.addEventListener("resize", setSize);
+  window.addEventListener("resize", () => {
+    setSize();
+    startAnimation();
+  });
 
   // ─── Mouse Listeners ────────────────────────────────────────────────────────
   window.addEventListener("mousemove", (e) => {
     targetMouse.x = e.clientX;
     targetMouse.y = e.clientY;
+    startAnimation();
   });
 
   window.addEventListener("click", (e) => {
@@ -125,6 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
       opacity: 1,
       born: performance.now()
     });
+    startAnimation();
   });
 
   // ─── Drawing logic ──────────────────────────────────────────────────────────
@@ -159,8 +172,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ── Build warped grid points ──
-    const cols = Math.max(2, Math.ceil(W / CELL_SIZE)) + 1;
-    const rows = Math.max(2, Math.ceil(H / CELL_SIZE)) + 1;
+    const cols = Math.max(2, Math.ceil(W / cellSize)) + 1;
+    const rows = Math.max(2, Math.ceil(H / cellSize)) + 1;
     const cellW = W / (cols - 1);
     const cellH = H / (rows - 1);
 
@@ -267,12 +280,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ─── Animation loop ──────────────────────────────────────────────────────────
   const animate = (now) => {
+    const dx = targetMouse.x - mouse.x;
+    const dy = targetMouse.y - mouse.y;
+    const mouseNeedsLerp = Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1;
+
     mouse.x = lerpN(mouse.x, targetMouse.x, LERP_SPEED);
     mouse.y = lerpN(mouse.y, targetMouse.y, LERP_SPEED);
 
     draw(now);
-    rafId = requestAnimationFrame(animate);
+
+    if (mouseNeedsLerp || ripples.length > 0) {
+      rafId = requestAnimationFrame(animate);
+    } else {
+      isAnimating = false;
+    }
   };
 
-  rafId = requestAnimationFrame(animate);
+  const startAnimation = () => {
+    if (!isAnimating) {
+      isAnimating = true;
+      rafId = requestAnimationFrame(animate);
+    }
+  };
+
+  startAnimation();
 });
