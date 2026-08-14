@@ -3,7 +3,7 @@
  * Curated for Muzammil Khan Portfolio Gallery
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap');
+/* Google Fonts loaded via HTML link tags to prevent render blocking */
 
 :root {
   /* --- PALETTE: Luxury Obsidian & Gold --- */
@@ -26,9 +26,9 @@
 
   /* --- ANIMATIONS & EASINGS --- */
   --ease-premium: cubic-bezier(0.25, 1, 0.5, 1);
-  --transition-fast: all 0.2s var(--ease-premium);
-  --transition-medium: all 0.4s var(--ease-premium);
-  --transition-slow: all 0.8s var(--ease-premium);
+  --transition-fast: opacity 0.2s var(--ease-premium), transform 0.2s var(--ease-premium), color 0.2s var(--ease-premium), border-color 0.2s var(--ease-premium), box-shadow 0.2s var(--ease-premium);
+  --transition-medium: opacity 0.4s var(--ease-premium), transform 0.4s var(--ease-premium), color 0.4s var(--ease-premium), border-color 0.4s var(--ease-premium), box-shadow 0.4s var(--ease-premium), background 0.4s var(--ease-premium);
+  --transition-slow: opacity 0.8s var(--ease-premium), transform 0.8s var(--ease-premium), filter 0.8s var(--ease-premium);
   
   /* --- SHADOWS --- */
   --shadow-soft: 0 16px 40px 0 rgba(0, 0, 0, 0.4);
@@ -239,7 +239,7 @@ body {
   height: 2px;
   background-color: var(--color-white);
   border-radius: 2px;
-  transition: all 0.3s var(--ease-premium);
+  transition: transform 0.3s var(--ease-premium), opacity 0.3s var(--ease-premium);
 }
 
 .nav-toggle.active .hamburger-bar:nth-child(1) {
@@ -273,7 +273,7 @@ body {
   opacity: 0;
   visibility: hidden;
   transform: translateY(-15px);
-  transition: all 0.4s cubic-bezier(0.2, 1, 0.2, 1);
+  transition: opacity 0.4s cubic-bezier(0.2, 1, 0.2, 1), visibility 0.4s cubic-bezier(0.2, 1, 0.2, 1), transform 0.4s cubic-bezier(0.2, 1, 0.2, 1);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
   z-index: 999;
 }
@@ -367,16 +367,17 @@ body {
   content: '';
   position: absolute;
   top: 0;
-  left: -100%;
+  left: 0;
   width: 100%;
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-  transition: 0.6s;
+  transform: translateX(-100%);
+  transition: transform 0.6s var(--ease-premium);
   z-index: -1;
 }
 
 .btn-premium:hover::before {
-  left: 100%;
+  transform: translateX(100%);
 }
 
 .btn-premium:hover {
